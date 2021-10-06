@@ -1,0 +1,42 @@
+.happy-button {
+  overflow: hidden;
+  border-style: solid;
+  border-color: #555;
+  padding: 4px;
+  margin-right: 6px;
+
+  &.happy-button-depressed {
+    background-color: #333;
+    border-top-width: 3px;
+    border-left-width: 3px;
+    border-bottom-width: 1px;
+    border-right-width: 1px;
+    .happy-button-content-wrapper {
+    }
+  }
+  &.happy-button-not-depressed {
+    border-top-width: 1px;
+    border-left-width: 1px;
+    border-bottom-width: 3px;
+    border-right-width: 3px;
+  }
+
+
+}
+
+.happpy-button-group {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  margin-left: 12px;
+  margin-right: 12px;
+}
+
+.happy-button-depressed .svg-toggle-button, .svg-button {
+  filter: invert(94%) sepia(82%) saturate(0%) hue-rotate(196deg) brightness(108%) contrast(101%);
+}
+
+.happy-button-not-depressed .svg-toggle-button {
+  filter: invert(65%) sepia(0%) saturate(114%) hue-rotate(135deg) brightness(104%) contrast(96%);
+}
+
