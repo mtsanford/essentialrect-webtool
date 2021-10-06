@@ -4,8 +4,6 @@ import { useAppSelector } from '../store/hooks';
 import { selectAspectRatios } from '../store/config-slice';
 import { selectPreviewColumns } from '../store/ui-slice';
 
-import { pathToUrl } from '../lib/util';
-
 import ImageEssentialPreview from './ImageEssentialPreview';
 import { selectCurrentImage } from '../store/current-image-slice';
 import AspectRatio from '../model/AspectRatio';
@@ -13,11 +11,11 @@ import AspectRatio from '../model/AspectRatio';
 const ImageEssentialGrid: React.FC = () => {
   const aspectRatios = useAppSelector(selectAspectRatios);
   const previewColumns = useAppSelector(selectPreviewColumns);
-  const { filePath, essentialRect, imageRect } = useAppSelector(
+  const { url, essentialRect, imageRect } = useAppSelector(
     selectCurrentImage
   );
 
-  const imageUrl = filePath ? pathToUrl(filePath) : undefined;
+  const imageUrl = url;
 
   const classes =
     previewColumns > 1

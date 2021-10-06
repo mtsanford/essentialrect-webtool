@@ -48,6 +48,7 @@
     ]
   },
   "devDependencies": {
-    "@types/use-double-click": "^1.0.1"
+    "@types/use-double-click": "^1.0.1",
+    "sass": "^1.42.1"
   }
 }

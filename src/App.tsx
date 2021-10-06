@@ -1,6 +1,6 @@
 import React from 'react';
-import './App.css';
-import './ImageRectTool.css';
+import './App.global.scss';
+// import './ImageRectTool.css';
 
 import ImageRectTool from './components/ImageRectTool';
 

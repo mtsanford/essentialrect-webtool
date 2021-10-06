@@ -7,7 +7,7 @@ import type { AppDispatch } from './index';
 
 // TODO: need handle cancel case
 
-export const setCurrentImage = (filePath: string) => {
+export const setCurrentImage = (url: string) => {
   return async (dispatch: AppDispatch) => {
     const probeImage = new Image();
     probeImage.onload = () => {
@@ -19,12 +19,12 @@ export const setCurrentImage = (filePath: string) => {
       };
       dispatch(
         currentImageActions.setImage({
-          filePath,
+          url,
           imageRect,
         })
       );
     };
-    probeImage.src = filePath;
+    probeImage.src = url;
   };
 };
 

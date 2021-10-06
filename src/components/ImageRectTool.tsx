@@ -20,7 +20,7 @@ const ImageRectTool = () => {
   const constrain = useAppSelector(selectConstrain);
   const lowerConstraint = useAppSelector(selectLowerConstraint);
   const upperConstraint = useAppSelector(selectUpperConstraint);
-  const { filePath, essentialRect, imageRect } = useAppSelector(
+  const { url, essentialRect, imageRect } = useAppSelector(
     selectCurrentImage
   );
 
@@ -64,7 +64,7 @@ const ImageRectTool = () => {
     <div className="image-rect-tool">
       <ImageViewerControls onReset={resetHandler} />
       <ImageViewer
-        filePath={filePath}
+        imageUrl={url}
         essentialRect={essentialRect}
         imageRect={imageRect}
         maxWidth={maxWidth}

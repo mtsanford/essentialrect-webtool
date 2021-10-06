@@ -23,7 +23,7 @@ const cropImageStyles: CSSProperties = { width: '100%' };
 
 const ImageViewer = (props: any) => {
   const {
-    filePath,
+    imageUrl,
     imageRect,
     essentialRect,
     maxWidth,
@@ -40,8 +40,6 @@ const ImageViewer = (props: any) => {
   let maxCropHeight;
 
   const [imageViewerRef, clientRect] = useClientRect();
-
-  const imageUrl = pathToUrl(filePath);
 
   // we can determine where image should be placed until we have clientrect
   // and an image rect.  We can't draw the crop until we have an essentialRect.

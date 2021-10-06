@@ -3,18 +3,21 @@ import type { RootState } from './index';
 import { Rect } from '../model/Rect';
 
 export interface CurrentImageState {
-  filePath?: string;
+  url?: string;
   imageRect?: Rect;
   essentialRect?: Rect;
 }
 
 export interface SetImageRecord {
-  filePath?: string;
+  url?: string;
   imageRect?: Rect;
   essentialRect?: Rect;
 }
 
 const initialState: CurrentImageState = {
+  url: './sax.jpg',
+  imageRect: { left: 0, top: 0, width: 1800, height: 1200 },
+  essentialRect:  { left: 0, top: 0, width: 1800, height: 1200 }
 };
 
 const currentImageSlice = createSlice({
@@ -22,7 +25,7 @@ const currentImageSlice = createSlice({
   initialState,
   reducers: {
     setImage(state: any, action: PayloadAction<SetImageRecord>) {
-      state.filePath = action.payload.filePath;
+      state.url = action.payload.url;
       state.imageRect = action.payload.imageRect;
       state.essentialRect = action.payload.essentialRect;
     },
