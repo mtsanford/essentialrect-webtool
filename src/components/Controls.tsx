@@ -4,9 +4,9 @@ import { selectPreviewColumns, uiActions } from '../store/ui-slice';
 
 import HappyButton, { HappyButtonGroup } from './UI/HappyButton';
 
-import folderIcon from '../../assets/icons/folder.svg';
-import settingsIcon from '../../assets/icons/settings.svg';
-import infoIcon from '../../assets/icons/info.svg';
+import folderIcon from '../assets/icons/folder.svg';
+import settingsIcon from '../assets/icons/settings.svg';
+import infoIcon from '../assets/icons/info.svg';
 
 const Single = () => {
   return (

@@ -11,8 +11,8 @@ import {
 import { selectAspectRatios } from '../store/config-slice';
 
 import HappyButton from './UI/HappyButton';
-import maximizeIcon from '../../assets/icons/maximize.svg';
-import constrainIcon from '../../assets/icons/crop.svg';
+import maximizeIcon from '../assets/icons/maximize.svg';
+import constrainIcon from '../assets/icons/crop.svg';
 import AspectRatio from '../model/AspectRatio';
 
 const aspectRatioSelectValues = (aspectRatios: AspectRatio[], predicate: any) => {
