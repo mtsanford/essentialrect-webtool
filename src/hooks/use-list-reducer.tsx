@@ -7,8 +7,8 @@ import { shuffleArray } from '../lib/util';
 //  nextbunch
 //  previousbunch
 
-const listReducer = (state, action) => {
-  const getBunch = (fullList, shuffleIndex, bunchSize, offset) => {
+const listReducer = (state: any, action: any) => {
+  const getBunch = (fullList: any, shuffleIndex: any, bunchSize: any, offset: any) => {
     return Array(bunchSize)
       .fill(null)
       .map((_, i) => fullList[shuffleIndex[i + offset]] || '');

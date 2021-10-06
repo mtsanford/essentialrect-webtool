@@ -8,6 +8,7 @@ import { pathToUrl } from '../lib/util';
 
 import ImageEssentialPreview from './ImageEssentialPreview';
 import { selectCurrentImage } from '../store/current-image-slice';
+import AspectRatio from '../model/AspectRatio';
 
 const ImageEssentialGrid: React.FC = () => {
   const aspectRatios = useAppSelector(selectAspectRatios);
@@ -25,7 +26,7 @@ const ImageEssentialGrid: React.FC = () => {
 
   return (
     <div className={classes}>
-      {aspectRatios.map((aspectRatioInfo) => (
+      {aspectRatios.map((aspectRatioInfo: AspectRatio) => (
         <ImageEssentialPreview
           imageUrl={imageUrl}
           essentialRect={essentialRect}

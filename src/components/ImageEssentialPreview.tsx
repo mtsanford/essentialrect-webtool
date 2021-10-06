@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 
 import { fitRect } from '../lib/fit-essential-rect';
 import useClientRect from '../hooks/use-client-rect';
@@ -50,7 +50,7 @@ const ImageEssentialPreview: React.FC<{
   imageRect?: Rect;
   essentialRect?: Rect;
 }> = ({ aspectRatioInfo, imageUrl, imageRect, essentialRect }) => {
-  let imageStyles;
+  let imageStyles: CSSProperties = {};
   let contentStyles = {};
   let orientationClass;
   let imageContainerRect: Rect;

@@ -21,12 +21,12 @@ const currentImageSlice = createSlice({
   name: 'currentImage',
   initialState,
   reducers: {
-    setImage(state, action: PayloadAction<SetImageRecord>) {
+    setImage(state: any, action: PayloadAction<SetImageRecord>) {
       state.filePath = action.payload.filePath;
       state.imageRect = action.payload.imageRect;
       state.essentialRect = action.payload.essentialRect;
     },
-    setEssentialRect(state, action) {
+    setEssentialRect(state: any, action: any) {
       state.essentialRect = action.payload;
     },
   },

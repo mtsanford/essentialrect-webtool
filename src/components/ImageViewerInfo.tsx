@@ -1,6 +1,5 @@
 import React, { useCallback, MouseEventHandler } from 'react';
 
-import { clipboard } from 'electron';
 import { selectCurrentImage } from '../store/current-image-slice';
 import { useAppSelector } from '../store/hooks';
 
@@ -20,7 +19,7 @@ const ImageViewerInfo: React.FC = () => {
   const monitorClickHandler: MouseEventHandler<HTMLDivElement> = useCallback(
     (event) => {
       event.preventDefault();
-      clipboard.writeText(monitorText);
+      // clipboard.writeText(monitorText);
     },
     [monitorText]
   );

@@ -15,7 +15,7 @@ import maximizeIcon from '../../assets/icons/maximize.svg';
 import constrainIcon from '../../assets/icons/crop.svg';
 import AspectRatio from '../model/AspectRatio';
 
-const aspectRatioSelectValues = (aspectRatios, predicate) => {
+const aspectRatioSelectValues = (aspectRatios: AspectRatio[], predicate: any) => {
   const aspectRatioSubset = aspectRatios.filter(predicate);
   return [{ id: 'none', text: '---none---' }].concat(
     aspectRatioSubset.map((ar) => ({
@@ -45,19 +45,19 @@ const ImageViewerControls = (props: any) => {
 
   const lowerSelectValues = aspectRatioSelectValues(
     aspectRatios,
-    (ar) => ar.aspectRatio < 1
+    (ar: AspectRatio) => ar.aspectRatio < 1
   );
 
   const upperSelectValues = aspectRatioSelectValues(
     aspectRatios,
-    (ar) => ar.aspectRatio > 1
+    (ar: AspectRatio) => ar.aspectRatio > 1
   );
 
   const constrainClicked = useCallback(() => {
     dispatch(uiActions.setConstrain(!constrain));
   }, [constrain, dispatch]);
 
-  const lowerConstraintChanged = (event) => {
+  const lowerConstraintChanged = (event: any) => {
     const id = event.target.value === 'none' ? undefined : event.target.value;
     const aspectRatio = aspectRatioFromID(aspectRatios, id);
 
@@ -65,7 +65,7 @@ const ImageViewerControls = (props: any) => {
     dispatch(uiActions.setLowerConstraint({ id, aspectRatio }));
   };
 
-  const upperConstraintChanged = (event) => {
+  const upperConstraintChanged = (event: any) => {
     const id = event.target.value === 'none' ? undefined : event.target.value;
     const aspectRatio = aspectRatioFromID(aspectRatios, id);
 

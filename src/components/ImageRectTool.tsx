@@ -56,7 +56,7 @@ const ImageRectTool = () => {
     resetEssentialRect();
   }, [imageRect, maxWidth, maxHeight, resetEssentialRect]);
 
-  const setEssentialRect = (newEssentialRect) => {
+  const setEssentialRect = (newEssentialRect: any) => {
     dispatch(currentImageActions.setEssentialRect(newEssentialRect));
   };
 

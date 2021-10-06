@@ -32,24 +32,24 @@ const uiSlice = createSlice({
   name: 'ui',
   initialState,
   reducers: {
-    showNotification(state, action: PayloadAction<Notification>) {
+    showNotification(state: any, action: PayloadAction<Notification>) {
       state.notification = action.payload;
     },
-    setPreviewColumns(state, action: PayloadAction<number>) {
+    setPreviewColumns(state: any, action: PayloadAction<number>) {
       state.previewColumns = action.payload;
     },
-    setConstrain(state, action: PayloadAction<boolean>) {
+    setConstrain(state: any, action: PayloadAction<boolean>) {
       state.constrain = action.payload;
     },
     setLowerConstraint(
-      state,
+      state: any,
       action: PayloadAction<{ id?: string; aspectRatio?: number }>
     ) {
       state.lowerConstraintID = action.payload.id;
       state.lowerConstraint = action.payload.aspectRatio || MAX_ASPECT_RATIO;
     },
     setUpperConstraint(
-      state,
+      state: any,
       action: PayloadAction<{ id?: string; aspectRatio?: number }>
     ) {
       state.upperConstraintID = action.payload.id;
