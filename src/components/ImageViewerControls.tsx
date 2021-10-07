@@ -109,7 +109,7 @@ const ImageViewerControls = (props: any) => {
       </div>
 
       <div>
-        <label htmlFor="max-aspect-ratio">min target aspect ratio</label>
+        <label htmlFor="max-aspect-ratio">max target aspect ratio</label>
         <select
           id="max-aspect-ratio"
           value={upperConstraintID}
