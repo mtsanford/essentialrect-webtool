@@ -1,6 +1,7 @@
 import React, { useEffect, useCallback } from 'react';
+import Rect from '../model/Rect';
 
-import ImageViewer from './ImageViewer';
+import EssentialRectEditor from './EssentialRectEditor';
 import ImageViewerControls from './ImageViewerControls';
 import ImageViewerInfo from './ImageViewerInfo';
 
@@ -56,20 +57,23 @@ const ImageRectTool = () => {
     resetEssentialRect();
   }, [imageRect, maxWidth, maxHeight, resetEssentialRect]);
 
-  const setEssentialRect = (newEssentialRect: any) => {
+  // const setEssentialRect = (newEssentialRect: any) => {
+  //   dispatch(currentImageActions.setEssentialRect(newEssentialRect));
+  // };
+
+  const essentialRectChanged = (newEssentialRect: Rect) => {
     dispatch(currentImageActions.setEssentialRect(newEssentialRect));
-  };
+  }
 
   return (
     <div className="image-rect-tool">
       <ImageViewerControls onReset={resetHandler} />
-      <ImageViewer
+      <EssentialRectEditor
         imageUrl={url}
         essentialRect={essentialRect}
-        imageRect={imageRect}
-        maxWidth={maxWidth}
-        maxHeight={maxHeight}
-        setEssentialRect={setEssentialRect}
+        onEssentialRectChange={essentialRectChanged}
+        minAspectRatio={lowerConstraint}
+        maxAspectRatio={upperConstraint}
       />
       <ImageViewerInfo />
     </div>
