@@ -1,3 +1,4 @@
+import Rect from '../model/Rect';
 import { currentImageActions } from './current-image-slice';
 import type { AppDispatch } from './index';
 
@@ -7,24 +8,48 @@ import type { AppDispatch } from './index';
 
 // TODO: need handle cancel case
 
-export const setCurrentImage = (url: string) => {
+export interface SetCurrentImageRecord {
+  url: string;
+  essentialRect?: Rect;
+  imageRect?: Rect;
+}
+
+// export const setCurrentImage: (r: SetCurrentImageRecord) => void = ({url, essentialRect, imageRect}) => {
+
+export const setCurrentImage = (url: string, essentialRect?: Rect, imageRect?: Rect) => {
+  console.log('setCurrentImage', essentialRect);
   return async (dispatch: AppDispatch) => {
-    const probeImage = new Image();
-    probeImage.onload = () => {
-      const imageRect = {
-        left: 0,
-        top: 0,
-        width: probeImage.width,
-        height: probeImage.height,
-      };
+    if (imageRect) {
+      if (!essentialRect) {
+        essentialRect = imageRect;
+      }
       dispatch(
         currentImageActions.setImage({
           url,
           imageRect,
+          essentialRect,
         })
       );
-    };
-    probeImage.src = url;
+    }
+    else {
+      const probeImage = new Image();
+      probeImage.onload = () => {
+        const imageRect = {
+          left: 0,
+          top: 0,
+          width: probeImage.width,
+          height: probeImage.height,
+        };
+        dispatch(
+          currentImageActions.setImage({
+            url,
+            imageRect,
+            essentialRect,
+          })
+        );
+      }
+      probeImage.src = url;
+    }
   };
 };
 

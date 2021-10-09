@@ -10,6 +10,8 @@ import {
   selectConstrain,
   selectLowerConstraint,
   selectUpperConstraint,
+  MIN_ASPECT_RATIO,
+  MAX_ASPECT_RATIO,
 } from '../store/ui-slice';
 import {
   currentImageActions,
@@ -38,6 +40,7 @@ const ImageRectTool = () => {
   }
 
   const resetEssentialRect = useCallback(() => {
+    console.log('resetEssentialRect');
     if (imageRect) {
       const newEssentialRect = {
         left: (imageRect.width - maxWidth) / 2,
@@ -54,14 +57,12 @@ const ImageRectTool = () => {
   }, [resetEssentialRect]);
 
   useEffect(() => {
+    console.log('max changed!');
     resetEssentialRect();
-  }, [imageRect, maxWidth, maxHeight, resetEssentialRect]);
-
-  // const setEssentialRect = (newEssentialRect: any) => {
-  //   dispatch(currentImageActions.setEssentialRect(newEssentialRect));
-  // };
+  }, [maxWidth, maxHeight, resetEssentialRect]);
 
   const essentialRectChanged = (newEssentialRect: Rect) => {
+    console.log('essentialRectChanged', newEssentialRect)
     dispatch(currentImageActions.setEssentialRect(newEssentialRect));
   }
 

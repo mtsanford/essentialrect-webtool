@@ -65,8 +65,7 @@ const EssentialRectEditor: React.FC<EssentialRectEditorProps> = ({
   let maxCropHeight: number | undefined;
 
   // use a fake image rect until the image is loaded
-  const imageRect = realImageRect || { left: 0, top: 0, width: 1, height: 1};
-
+  const imageRect = realImageRect || { left: 0, top: 0, width: 1, height: 1 };
 
   // we can determine where image should be placed until we have clientrect
   // and an image rect.  We can't draw the crop until we have an essentialRect.
@@ -94,8 +93,12 @@ const EssentialRectEditor: React.FC<EssentialRectEditorProps> = ({
     );
 
     // figure the max crop dimensions in image units
-    const maxWidth = minAspectRatio ? Math.min(imageRect.width, imageRect.height * minAspectRatio) : imageRect.width;
-    const maxHeight = maxAspectRatio ? Math.min(imageRect.height, imageRect.width / maxAspectRatio) : imageRect.height;
+    const maxWidth = minAspectRatio
+      ? Math.min(imageRect.width, imageRect.height * minAspectRatio)
+      : imageRect.width;
+    const maxHeight = maxAspectRatio
+      ? Math.min(imageRect.height, imageRect.width / maxAspectRatio)
+      : imageRect.height;
 
     // then convert to client units
     const maxCropRect = imageToClientRect(imageRect, cropWrapperRect, {
@@ -105,12 +108,9 @@ const EssentialRectEditor: React.FC<EssentialRectEditorProps> = ({
       height: maxHeight,
     });
 
-    if (minAspectRatio) {
-      maxCropWidth = Math.floor(maxCropRect.width);
-    }
+    if (minAspectRatio) { maxCropWidth = Math.floor(maxCropRect.width); }
 
-    if (maxAspectRatio)
-    maxCropHeight = Math.floor(maxCropRect.height);
+    if (maxAspectRatio) { maxCropHeight = Math.floor(maxCropRect.height); }
 
     crop = {
       x: essentialRectClient.left - cropWrapperRect.left,
@@ -122,6 +122,7 @@ const EssentialRectEditor: React.FC<EssentialRectEditorProps> = ({
   }
 
   const onCropChange = (newCrop: Crop) => {
+    console.log("onCropChange", newCrop);
     const selectRect: Rect = {
       left: newCrop.x + cropWrapperRect.left,
       top: newCrop.y + cropWrapperRect.top,
@@ -141,16 +142,45 @@ const EssentialRectEditor: React.FC<EssentialRectEditorProps> = ({
     if (!rectEmpty(clipped)) {
       if (onEssentialRectChange) onEssentialRectChange(clipped);
     }
-  }
+  };
 
-  const imageLoaded = useCallback((element: HTMLImageElement): void => {
-    setRealImageRect({
+  /*********************************** */
+
+  const imageLoaded = useCallback((element: HTMLImageElement): boolean => {
+    const imageWidth = element.naturalWidth;
+    const imageHeight = element.naturalHeight;
+
+    const loadedImageRect = {
       left: 0,
       top: 0,
-      width: element.naturalWidth,
-      height: element.naturalHeight,
-    });
-  }, []);
+      width: imageWidth,
+      height: imageHeight,
+    };
+
+    // if our parents has not supplied an essentialRect, set it now
+    if (!essentialRect && onEssentialRectChange) {
+      const maxWidth = minAspectRatio
+        ? Math.min(imageWidth, imageHeight * minAspectRatio)
+        : loadedImageRect.width;
+      const maxHeight = maxAspectRatio
+        ? Math.min(imageHeight, imageWidth / maxAspectRatio)
+        : loadedImageRect.height;
+      const newEssentialRect = {
+        left: (imageWidth - maxWidth) / 2,
+        top: (imageHeight - maxHeight) / 2,
+        width: maxWidth,
+        height: maxHeight,
+      };
+
+      onEssentialRectChange(newEssentialRect);
+    }
+
+    setRealImageRect(loadedImageRect);
+
+    console.log('imageLoaded');
+
+    return false;
+  }, [minAspectRatio, maxAspectRatio, essentialRect, onEssentialRectChange]);
 
   return (
     <div className="image-viewer">

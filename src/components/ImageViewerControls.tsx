@@ -1,5 +1,4 @@
 import React, { useCallback } from 'react';
-import { Rect, rectEmpty } from '../model/Rect';
 
 import { useAppSelector, useAppDispatch } from '../store/hooks';
 import {

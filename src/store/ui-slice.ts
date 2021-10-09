@@ -2,8 +2,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from './index';
 import persistentStorage from '../persistentStorage';
 
-const MIN_ASPECT_RATIO = 0.001;
-const MAX_ASPECT_RATIO = 1000;
+export const MIN_ASPECT_RATIO = 0.001;
+export const MAX_ASPECT_RATIO = 1000;
 
 export interface Notification {
   status: string;
@@ -46,14 +46,14 @@ const uiSlice = createSlice({
       action: PayloadAction<{ id?: string; aspectRatio?: number }>
     ) {
       state.lowerConstraintID = action.payload.id;
-      state.lowerConstraint = action.payload.aspectRatio || MAX_ASPECT_RATIO;
+      state.lowerConstraint = (state.constrain && action.payload.aspectRatio) || MAX_ASPECT_RATIO;
     },
     setUpperConstraint(
       state: any,
       action: PayloadAction<{ id?: string; aspectRatio?: number }>
     ) {
       state.upperConstraintID = action.payload.id;
-      state.upperConstraint = action.payload.aspectRatio || MIN_ASPECT_RATIO;
+      state.upperConstraint = (state.constrain && action.payload.aspectRatio) || MIN_ASPECT_RATIO;
     },
   },
 });

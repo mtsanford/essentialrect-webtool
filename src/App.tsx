@@ -9,6 +9,7 @@ import ImageEssentialGrid from "./components/ImageEssentialGrid";
 import { useAppDispatch } from './store/hooks';
 import { setCurrentImage } from './store/current-image-actions';
 
+import Rect from "./model/Rect";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -22,15 +23,27 @@ function App() {
 
   const onSelectFile: React.ChangeEventHandler<HTMLInputElement>= e => {
     if (e.target.files && e.target.files.length > 0) {
+
+      const file = e.target.files[0];
+    
+      let essentialRect: Rect;
+
+      console.log(file.name);
+
+      if (file.name === "20150210_014858.jpg") {
+        essentialRect = {
+          top: 100, left: 100, width: 300, height: 400 
+        }
+      }
+
       const reader = new FileReader();
       reader.addEventListener('load', () => {
         const newSrc: any = reader.result;
-        dispatch(setCurrentImage(newSrc));
+        dispatch(setCurrentImage(newSrc, essentialRect));
       });
-      reader.readAsDataURL(e.target.files[0]);
+      reader.readAsDataURL(file);
     }
   };
-
 
   return (
     <SplitterLayout
