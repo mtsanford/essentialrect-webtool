@@ -70,7 +70,6 @@ const EssentialRectEditor: React.FC<EssentialRectEditorProps> = ({
   // we can determine where image should be placed until we have clientrect
   // and an image rect.  We can't draw the crop until we have an essentialRect.
   const drawCrop = imageUrl && !rectEmpty(clientRect);
-  // const drawCrop = drawCropWrapper && essentialRect;
 
   if (drawCrop) {
     cropWrapperRect = fitRect(imageRect, imageRect, clientRect);
@@ -126,7 +125,6 @@ const EssentialRectEditor: React.FC<EssentialRectEditorProps> = ({
   }
 
   const onCropChange = (newCrop: Crop) => {
-    console.log("onCropChange", newCrop);
     const selectRect: Rect = {
       left: newCrop.x + cropWrapperRect.left,
       top: newCrop.y + cropWrapperRect.top,
@@ -152,7 +150,6 @@ const EssentialRectEditor: React.FC<EssentialRectEditorProps> = ({
 
   const imageLoaded = useCallback(
     (element: HTMLImageElement): boolean => {
-      console.log("imageLoaded", essentialRect);
       const imageWidth = element.naturalWidth;
       const imageHeight = element.naturalHeight;
 
@@ -165,28 +162,7 @@ const EssentialRectEditor: React.FC<EssentialRectEditorProps> = ({
 
       setRealImageRect(loadedImageRect);
 
-      // if our parent has not supplied an essentialRect, set it now
-      // if (!essentialRect && onResetEssentialRect) onResetEssentialRect();
-
       if (onImageLoaded) onImageLoaded(element);
-
-      // if our parents has not supplied an essentialRect, set it now
-      // if (!essentialRect && onEssentialRectChange) {
-      //   const maxWidth = minAspectRatio
-      //     ? Math.min(imageWidth, imageHeight * minAspectRatio)
-      //     : loadedImageRect.width;
-      //   const maxHeight = maxAspectRatio
-      //     ? Math.min(imageHeight, imageWidth / maxAspectRatio)
-      //     : loadedImageRect.height;
-      //   const newEssentialRect = {
-      //     left: (imageWidth - maxWidth) / 2,
-      //     top: (imageHeight - maxHeight) / 2,
-      //     width: maxWidth,
-      //     height: maxHeight,
-      //   };
-
-      //   onEssentialRectChange(newEssentialRect);
-      // }
 
       return false;
     },

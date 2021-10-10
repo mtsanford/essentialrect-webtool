@@ -82,7 +82,4 @@ export const selectMinAspectRatio = (state: RootState) =>
 export const selectMaxAspectRatio = (state: RootState) =>
   state.ui.maxAspectRatio;
 
-export const selectUI = (state: RootState) => state.ui;
-
-
 export default uiSlice;
