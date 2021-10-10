@@ -164,6 +164,8 @@ const EssentialRectEditor: React.FC<EssentialRectEditorProps> = ({
 
       if (onImageLoaded) onImageLoaded(element);
 
+      // let ReactCrop know that it does not need to set the crop.  We 
+      // set that through the essentialRect prop.
       return false;
     },
     [onImageLoaded]

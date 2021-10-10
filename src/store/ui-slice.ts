@@ -2,9 +2,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from './index';
 import persistentStorage from '../persistentStorage';
 
-export const MIN_ASPECT_RATIO = 0.001;
-export const MAX_ASPECT_RATIO = 1000;
-
 export interface Notification {
   status: string;
   title: string;
@@ -14,22 +11,28 @@ export interface Notification {
 export interface UiState {
   notification?: Notification;
   previewColumns: number;
+
+  // contraint controls
   constrain: boolean;
   lowerConstraintID?: string;
   upperConstraintID?: string;
-  lowerConstraint: number;
-  upperConstraint: number;
-  minAspectRatio: number;
-  maxAspectRatio: number;
+  lowerConstraint?: number;
+  upperConstraint?: number;
+
+  // derived values
+  minAspectRatio?: number;
+  maxAspectRatio?: number;
 }
 
 const initialState: UiState = persistentStorage.get('uiState', {
   previewColumns: 2,
-  constrain: false,
-  lowerConstraint: MAX_ASPECT_RATIO,
-  upperConstraint: MIN_ASPECT_RATIO,
-  minAspectRatio: MAX_ASPECT_RATIO,
-  maxAspectRatio: MIN_ASPECT_RATIO,
+  constrain: true,
+  lowerConstraintID: '(4:5)',
+  upperConstraintID: '(1.91:1)',
+  lowerConstraint: 4 / 5,
+  upperConstraint: 1.91,
+  minAspectRatio: 4 / 5,
+  maxAspectRatio: 1.91,
 });
 
 const uiSlice = createSlice({
@@ -44,24 +47,24 @@ const uiSlice = createSlice({
     },
     setConstrain(state: UiState, action: PayloadAction<boolean>) {
       state.constrain = action.payload;
-      state.minAspectRatio = (state.constrain && state.lowerConstraint) || MAX_ASPECT_RATIO;
-      state.maxAspectRatio = (state.constrain && state.upperConstraint) || MIN_ASPECT_RATIO;
+      state.minAspectRatio = (state.constrain && state.lowerConstraint) || undefined;
+      state.maxAspectRatio = (state.constrain && state.upperConstraint) || undefined;
     },
     setLowerConstraint(
       state: UiState,
       action: PayloadAction<{ id?: string; aspectRatio?: number }>
     ) {
       state.lowerConstraintID = action.payload.id;
-      state.lowerConstraint = action.payload.aspectRatio || MAX_ASPECT_RATIO;
-      state.minAspectRatio = (state.constrain && state.lowerConstraint) || MAX_ASPECT_RATIO;
+      state.lowerConstraint = action.payload.aspectRatio;
+      state.minAspectRatio = (state.constrain && state.lowerConstraint) || undefined;
     },
     setUpperConstraint(
       state: UiState,
       action: PayloadAction<{ id?: string; aspectRatio?: number }>
     ) {
       state.upperConstraintID = action.payload.id;
-      state.upperConstraint = action.payload.aspectRatio || MIN_ASPECT_RATIO;
-      state.maxAspectRatio = (state.constrain && state.upperConstraint) || MIN_ASPECT_RATIO;
+      state.upperConstraint = action.payload.aspectRatio;
+      state.maxAspectRatio = (state.constrain && state.upperConstraint) || undefined;
     },
   },
 });

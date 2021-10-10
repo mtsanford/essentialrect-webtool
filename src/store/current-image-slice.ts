@@ -21,8 +21,8 @@ const initialState: CurrentImageState = {
 };
 
 export interface ResetEssentialRectRecord {
-  minAspectRatio: number;
-  maxAspectRatio: number;
+  minAspectRatio?: number;
+  maxAspectRatio?: number;
   imageRect?: Rect;
 }
 
@@ -42,8 +42,8 @@ const currentImageSlice = createSlice({
       if (action.payload.imageRect) state.imageRect = action.payload.imageRect;
 
       if (state.imageRect) {
-        const maxWidth = Math.min(state.imageRect.width, state.imageRect.height * action.payload.minAspectRatio);
-        const maxHeight =  Math.min(state.imageRect.height, state.imageRect.width / action.payload.maxAspectRatio);
+        const maxWidth = action.payload.minAspectRatio ? Math.min(state.imageRect.width, state.imageRect.height * action.payload.minAspectRatio) : state.imageRect.width;
+        const maxHeight =  action.payload.maxAspectRatio ? Math.min(state.imageRect.height, state.imageRect.width / action.payload.maxAspectRatio) : state.imageRect.height;
         const newEssentialRect = {
           left: (state.imageRect.width - maxWidth) / 2,
           top: (state.imageRect.height - maxHeight) / 2,
