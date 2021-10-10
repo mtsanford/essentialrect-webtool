@@ -56,7 +56,7 @@ const EssentialRectEditor: React.FC<EssentialRectEditorProps> = ({
   const [realImageRect, setRealImageRect] = useState<Rect | undefined>();
   const [imageViewerRef, clientRect] = useClientRect();
 
-  let crop: Partial<Crop> = { width: 10, height: 10 };
+  let crop: Partial<Crop> = {};
   let cropWrapperStyles: CSSProperties = {};
   let cropStyles: CSSProperties = {};
   let cropWrapperRect: Rect = emptyRect;
@@ -69,10 +69,10 @@ const EssentialRectEditor: React.FC<EssentialRectEditorProps> = ({
 
   // we can determine where image should be placed until we have clientrect
   // and an image rect.  We can't draw the crop until we have an essentialRect.
-  const drawCropWrapper = imageUrl && !rectEmpty(clientRect);
-  const drawCrop = drawCropWrapper && essentialRect;
+  const drawCrop = imageUrl && !rectEmpty(clientRect);
+  // const drawCrop = drawCropWrapper && essentialRect;
 
-  if (drawCropWrapper) {
+  if (drawCrop) {
     cropWrapperRect = fitRect(imageRect, imageRect, clientRect);
     cropWrapperStyles = stylesFromRect(cropWrapperRect);
     cropWrapperStyles = {
@@ -83,42 +83,46 @@ const EssentialRectEditor: React.FC<EssentialRectEditorProps> = ({
     cropStyles = {
       width: "100%",
     };
-  }
 
-  if (drawCrop) {
-    essentialRectClient = imageToClientRect(
-      imageRect,
-      cropWrapperRect,
-      essentialRect
-    );
+    if (essentialRect) {
+      essentialRectClient = imageToClientRect(
+        imageRect,
+        cropWrapperRect,
+        essentialRect
+      );
 
-    // figure the max crop dimensions in image units
-    const maxWidth = minAspectRatio
-      ? Math.min(imageRect.width, imageRect.height * minAspectRatio)
-      : imageRect.width;
-    const maxHeight = maxAspectRatio
-      ? Math.min(imageRect.height, imageRect.width / maxAspectRatio)
-      : imageRect.height;
+      // figure the max crop dimensions in image units
+      const maxWidth = minAspectRatio
+        ? Math.min(imageRect.width, imageRect.height * minAspectRatio)
+        : imageRect.width;
+      const maxHeight = maxAspectRatio
+        ? Math.min(imageRect.height, imageRect.width / maxAspectRatio)
+        : imageRect.height;
 
-    // then convert to client units
-    const maxCropRect = imageToClientRect(imageRect, cropWrapperRect, {
-      left: 0,
-      top: 0,
-      width: maxWidth,
-      height: maxHeight,
-    });
+      // then convert to client units
+      const maxCropRect = imageToClientRect(imageRect, cropWrapperRect, {
+        left: 0,
+        top: 0,
+        width: maxWidth,
+        height: maxHeight,
+      });
 
-    if (minAspectRatio) { maxCropWidth = Math.floor(maxCropRect.width); }
+      if (minAspectRatio) {
+        maxCropWidth = Math.floor(maxCropRect.width);
+      }
 
-    if (maxAspectRatio) { maxCropHeight = Math.floor(maxCropRect.height); }
+      if (maxAspectRatio) {
+        maxCropHeight = Math.floor(maxCropRect.height);
+      }
 
-    crop = {
-      x: essentialRectClient.left - cropWrapperRect.left,
-      y: essentialRectClient.top - cropWrapperRect.top,
-      width: essentialRectClient.width,
-      height: essentialRectClient.height,
-      unit: "px",
-    };
+      crop = {
+        x: essentialRectClient.left - cropWrapperRect.left,
+        y: essentialRectClient.top - cropWrapperRect.top,
+        width: essentialRectClient.width,
+        height: essentialRectClient.height,
+        unit: "px",
+      };
+    }
   }
 
   const onCropChange = (newCrop: Crop) => {
@@ -146,61 +150,66 @@ const EssentialRectEditor: React.FC<EssentialRectEditorProps> = ({
 
   /*********************************** */
 
-  const imageLoaded = useCallback((element: HTMLImageElement): boolean => {
-    const imageWidth = element.naturalWidth;
-    const imageHeight = element.naturalHeight;
+  const imageLoaded = useCallback(
+    (element: HTMLImageElement): boolean => {
+      console.log("imageLoaded", essentialRect);
+      const imageWidth = element.naturalWidth;
+      const imageHeight = element.naturalHeight;
 
-    const loadedImageRect = {
-      left: 0,
-      top: 0,
-      width: imageWidth,
-      height: imageHeight,
-    };
-
-    // if our parents has not supplied an essentialRect, set it now
-    if (!essentialRect && onEssentialRectChange) {
-      const maxWidth = minAspectRatio
-        ? Math.min(imageWidth, imageHeight * minAspectRatio)
-        : loadedImageRect.width;
-      const maxHeight = maxAspectRatio
-        ? Math.min(imageHeight, imageWidth / maxAspectRatio)
-        : loadedImageRect.height;
-      const newEssentialRect = {
-        left: (imageWidth - maxWidth) / 2,
-        top: (imageHeight - maxHeight) / 2,
-        width: maxWidth,
-        height: maxHeight,
+      const loadedImageRect = {
+        left: 0,
+        top: 0,
+        width: imageWidth,
+        height: imageHeight,
       };
 
-      onEssentialRectChange(newEssentialRect);
-    }
+      setRealImageRect(loadedImageRect);
 
-    setRealImageRect(loadedImageRect);
+      // if our parent has not supplied an essentialRect, set it now
+      // if (!essentialRect && onResetEssentialRect) onResetEssentialRect();
 
-    console.log('imageLoaded');
+      if (onImageLoaded) onImageLoaded(element);
 
-    return false;
-  }, [minAspectRatio, maxAspectRatio, essentialRect, onEssentialRectChange]);
+      // if our parents has not supplied an essentialRect, set it now
+      // if (!essentialRect && onEssentialRectChange) {
+      //   const maxWidth = minAspectRatio
+      //     ? Math.min(imageWidth, imageHeight * minAspectRatio)
+      //     : loadedImageRect.width;
+      //   const maxHeight = maxAspectRatio
+      //     ? Math.min(imageHeight, imageWidth / maxAspectRatio)
+      //     : loadedImageRect.height;
+      //   const newEssentialRect = {
+      //     left: (imageWidth - maxWidth) / 2,
+      //     top: (imageHeight - maxHeight) / 2,
+      //     width: maxWidth,
+      //     height: maxHeight,
+      //   };
+
+      //   onEssentialRectChange(newEssentialRect);
+      // }
+
+      return false;
+    },
+    [onImageLoaded]
+  );
 
   return (
     <div className="image-viewer">
       <div className="image-viewer-inner" ref={imageViewerRef}>
-        {drawCropWrapper && (
+        {drawCrop && (
           <div style={cropWrapperStyles}>
-            {drawCrop && (
-              <ReactCrop
-                src={imageUrl}
-                onImageLoaded={imageLoaded}
-                crop={crop}
-                onChange={onCropChange}
-                style={cropStyles}
-                imageStyle={cropImageStyles}
-                minWidth={32}
-                minHeight={32}
-                maxWidth={maxCropWidth}
-                maxHeight={maxCropHeight}
-              />
-            )}
+            <ReactCrop
+              src={imageUrl}
+              onImageLoaded={imageLoaded}
+              crop={crop}
+              onChange={onCropChange}
+              style={cropStyles}
+              imageStyle={cropImageStyles}
+              minWidth={32}
+              minHeight={32}
+              maxWidth={maxCropWidth}
+              maxHeight={maxCropHeight}
+            />
           </div>
         )}
       </div>

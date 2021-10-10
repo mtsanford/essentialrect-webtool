@@ -20,17 +20,39 @@ const initialState: CurrentImageState = {
   essentialRect:  { left: 0, top: 0, width: 1800, height: 1200 }
 };
 
+export interface ResetEssentialRectRecord {
+  minAspectRatio: number;
+  maxAspectRatio: number;
+  imageRect?: Rect;
+}
+
 const currentImageSlice = createSlice({
   name: 'currentImage',
   initialState,
   reducers: {
-    setImage(state: any, action: PayloadAction<SetImageRecord>) {
+    setImage(state: CurrentImageState, action: PayloadAction<SetImageRecord>) {
       state.url = action.payload.url;
       state.imageRect = action.payload.imageRect;
       state.essentialRect = action.payload.essentialRect;
     },
-    setEssentialRect(state: any, action: any) {
+    setEssentialRect(state: CurrentImageState, action: PayloadAction<Rect>) {
       state.essentialRect = action.payload;
+    },
+    resetEssentialRect(state: CurrentImageState, action: PayloadAction<ResetEssentialRectRecord>) {
+      if (action.payload.imageRect) state.imageRect = action.payload.imageRect;
+
+      if (state.imageRect) {
+        const maxWidth = Math.min(state.imageRect.width, state.imageRect.height * action.payload.minAspectRatio);
+        const maxHeight =  Math.min(state.imageRect.height, state.imageRect.width / action.payload.maxAspectRatio);
+        const newEssentialRect = {
+          left: (state.imageRect.width - maxWidth) / 2,
+          top: (state.imageRect.height - maxHeight) / 2,
+          width: maxWidth,
+          height: maxHeight,
+        };
+
+        state.essentialRect = newEssentialRect;
+      }
     },
   },
 });
