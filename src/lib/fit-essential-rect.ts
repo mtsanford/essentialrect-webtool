@@ -124,4 +124,5 @@ export function fitRect(
   return adjustedFittedRect;
 }
 
-export default { fitLine, fitRect, clientToImageRect };
+const allExports = { fitLine, fitRect, clientToImageRect };
+export default allExports;

@@ -7,7 +7,7 @@ import React, {
 
 import ReactCrop, { Crop } from "react-image-crop";
 
-import { Rect, rectEmpty, rectClip, emptyRect } from "../model/Rect";
+import { Rect, rectEmpty, rectClip, emptyRect, rectToStyles, rectScale } from "../model/Rect";
 import {
   fitRect,
   clientToImageRect,
@@ -53,96 +53,120 @@ const EssentialRectEditor: React.FC<EssentialRectEditorProps> = ({
   onImageError,
   onImageLoaded,
 }): ReactElement => {
-  const [realImageRect, setRealImageRect] = useState<Rect | undefined>();
+  const [imageRect, setImageRect] = useState<Rect | undefined>();
   const [imageViewerRef, clientRect] = useClientRect();
 
   let crop: Partial<Crop> = {};
   let cropWrapperStyles: CSSProperties = {};
-  let cropStyles: CSSProperties = {};
-  let cropWrapperRect: Rect = emptyRect;
   let essentialRectClient: Rect;
   let maxCropWidth: number | undefined;
   let maxCropHeight: number | undefined;
 
-  // use a fake image rect until the image is loaded
-  const imageRect = realImageRect || { left: 0, top: 0, width: 1, height: 1 };
+  let cropScale = 0;
+  let cropTop = 0;
+  let cropLeft = 0;
 
   // we can determine where image should be placed until we have clientrect
   // and an image rect.  We can't draw the crop until we have an essentialRect.
   const drawCrop = imageUrl && !rectEmpty(clientRect);
 
+  if (drawCrop && imageRect) {
+      cropScale = Math.min(clientRect.width / imageRect.width, clientRect.height / imageRect.height);
+      cropTop = (clientRect.height - imageRect.height * cropScale) / 2;
+      cropLeft = (clientRect.width - imageRect.width * cropScale) / 2;
+  }
+
   if (drawCrop) {
-    cropWrapperRect = fitRect(imageRect, imageRect, clientRect);
-    cropWrapperStyles = stylesFromRect(cropWrapperRect);
-    cropWrapperStyles = {
-      ...cropWrapperStyles,
-      position: "absolute",
-    };
 
-    cropStyles = {
-      width: "100%",
-    };
+    if (imageRect) {
 
-    if (essentialRect) {
-      essentialRectClient = imageToClientRect(
-        imageRect,
-        cropWrapperRect,
-        essentialRect
-      );
-
-      // figure the max crop dimensions in image units
-      const maxWidth = minAspectRatio
-        ? Math.min(imageRect.width, imageRect.height * minAspectRatio)
-        : imageRect.width;
-      const maxHeight = maxAspectRatio
-        ? Math.min(imageRect.height, imageRect.width / maxAspectRatio)
-        : imageRect.height;
-
-      // then convert to client units
-      const maxCropRect = imageToClientRect(imageRect, cropWrapperRect, {
-        left: 0,
-        top: 0,
-        width: maxWidth,
-        height: maxHeight,
-      });
-
-      if (minAspectRatio) {
-        maxCropWidth = Math.floor(maxCropRect.width);
-      }
-
-      if (maxAspectRatio) {
-        maxCropHeight = Math.floor(maxCropRect.height);
-      }
-
-      crop = {
-        x: essentialRectClient.left - cropWrapperRect.left,
-        y: essentialRectClient.top - cropWrapperRect.top,
-        width: essentialRectClient.width,
-        height: essentialRectClient.height,
-        unit: "px",
+      //cropWrapperRect = fitRect(imageRect, imageRect, clientRect);
+      //cropWrapperStyles = rectToStyles(cropWrapperRect);
+      cropWrapperStyles = {
+        //...cropWrapperStyles,
+        top: cropTop,
+        left: cropLeft,
+        width: imageRect.width * cropScale,
+        height: imageRect.height * cropScale,
+        position: "absolute",
       };
+
+
+      if (essentialRect) {
+        // essentialRectClient = imageToClientRect(
+        //   imageRect,
+        //   cropWrapperRect,
+        //   essentialRect
+        // );
+        essentialRectClient = rectScale(essentialRect, cropScale)
+
+        // figure the max crop dimensions in image units
+        // const maxWidth = minAspectRatio
+        //   ? Math.min(imageRect.width, imageRect.height * minAspectRatio)
+        //   : imageRect.width;
+        // const maxHeight = maxAspectRatio
+        //   ? Math.min(imageRect.height, imageRect.width / maxAspectRatio)
+        //   : imageRect.height;
+
+        // then convert to client units
+        // const maxCropRect = imageToClientRect(imageRect, cropWrapperRect, {
+        //   left: 0,
+        //   top: 0,
+        //   width: maxWidth,
+        //   height: maxHeight,
+        // });
+
+        if (minAspectRatio) {
+          maxCropWidth = Math.floor(Math.min(imageRect.width, imageRect.height * minAspectRatio) * cropScale);
+        }
+
+        if (maxAspectRatio) {
+          maxCropHeight = Math.floor(Math.min(imageRect.height, imageRect.width * maxAspectRatio) * cropScale);
+        }
+
+        crop = {
+          // x: essentialRectClient.left - cropLeft,
+          // y: essentialRectClient.top - cropTop,
+          x: essentialRectClient.left,
+          y: essentialRectClient.top,
+          width: essentialRectClient.width,
+          height: essentialRectClient.height,
+          unit: "px",
+        };
+      }
     }
   }
 
   const onCropChange = (newCrop: Crop) => {
-    const selectRect: Rect = {
-      left: newCrop.x + cropWrapperRect.left,
-      top: newCrop.y + cropWrapperRect.top,
-      width: newCrop.width,
-      height: newCrop.height,
-    };
+    // const selectRect: Rect = {
+    //   left: newCrop.x + cropWrapperRect.left,
+    //   top: newCrop.y + cropWrapperRect.top,
+    //   width: newCrop.width,
+    //   height: newCrop.height,
+    // };
 
-    if (!realImageRect) return;
+    // if (!imageRect) return;
 
-    const newEssentialRect = clientToImageRect(
-      imageRect,
-      cropWrapperRect,
-      selectRect
-    );
-    const clipped = rectClip(newEssentialRect, imageRect);
+    // const newEssentialRect = clientToImageRect(
+    //   imageRect,
+    //   cropWrapperRect,
+    //   selectRect
+    // );
 
-    if (!rectEmpty(clipped)) {
-      if (onEssentialRectChange) onEssentialRectChange(clipped);
+    if (imageRect && cropScale) {
+      const newEssentialRect = rectClip(rectScale({
+        left: newCrop.x,
+        top: newCrop.y,
+        width: newCrop.width,
+        height: newCrop.height,
+      }, 1/ cropScale), imageRect);
+
+
+      // const clipped = rectClip(newEssentialRect, imageRect);
+
+      if (!rectEmpty(newEssentialRect)) {
+        if (onEssentialRectChange) onEssentialRectChange(newEssentialRect);
+      }
     }
   };
 
@@ -160,7 +184,7 @@ const EssentialRectEditor: React.FC<EssentialRectEditorProps> = ({
         height: imageHeight,
       };
 
-      setRealImageRect(loadedImageRect);
+      setImageRect(loadedImageRect);
 
       if (onImageLoaded) onImageLoaded(element);
 
@@ -181,7 +205,7 @@ const EssentialRectEditor: React.FC<EssentialRectEditorProps> = ({
               onImageLoaded={imageLoaded}
               crop={crop}
               onChange={onCropChange}
-              style={cropStyles}
+              style={cropImageStyles}
               imageStyle={cropImageStyles}
               minWidth={32}
               minHeight={32}

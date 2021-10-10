@@ -1,3 +1,5 @@
+import { CSSProperties } from "react";
+
 export interface Rect {
   left: number;
   top: number;
@@ -48,6 +50,25 @@ export function rectFromPoints(point1: Point, point2: Point) {
     top: Math.min(point1.y, point2.y),
     width: Math.abs(point1.x - point2.x),
     height: Math.abs(point1.y - point2.y),
+  };
+}
+
+// for positioning in DOM
+export function rectToStyles(rect: Rect): CSSProperties {
+  return {
+    left: `${rect.left}px`,
+    top: `${rect.top}px`,
+    width: `${rect.width}px`,
+    height: `${rect.height}px`,
+  };
+}
+
+export function rectScale(rect: Rect, scale: number): Rect {
+  return {
+    left: rect.left * scale,
+    top: rect.top * scale,
+    width: rect.width * scale,
+    height: rect.height * scale,
   };
 }
 
