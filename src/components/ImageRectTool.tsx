@@ -1,7 +1,8 @@
-import React, { useEffect  } from 'react';
-import Rect from '../model/Rect';
+import React, { useEffect } from 'react';
 
-import EssentialRectEditor from './EssentialRectEditor';
+import EssentialRectEditor from 'react-essentialrect-editor';
+import { Rect } from 'react-essentialrect';
+
 import ImageViewerControls from './ImageViewerControls';
 import ImageViewerInfo from './ImageViewerInfo';
 

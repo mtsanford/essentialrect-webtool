@@ -1,4 +1,4 @@
-import Rect from '../model/Rect';
+import { Rect } from 'react-essentialrect';
 import { currentImageActions } from './current-image-slice';
 import type { AppDispatch } from './index';
 

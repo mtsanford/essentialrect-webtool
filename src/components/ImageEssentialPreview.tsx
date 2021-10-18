@@ -1,8 +1,7 @@
-import React, { CSSProperties } from 'react';
+import React  from 'react';
 
-import { fitRect } from '../lib/fit-essential-rect';
-import useClientRect from '../hooks/use-client-rect';
-import { Rect, rectEmpty } from '../model/Rect';
+import {EssentialRectImg, useClientRect, Rect } from 'react-essentialrect';
+
 import AspectRatio from '../model/AspectRatio';
 
 const imageContainerFit = 0.91; // % of client to fill
@@ -50,7 +49,6 @@ const ImageEssentialPreview: React.FC<{
   imageRect?: Rect;
   essentialRect?: Rect;
 }> = ({ aspectRatioInfo, imageUrl, imageRect, essentialRect }) => {
-  let imageStyles: CSSProperties = {};
   let contentStyles = {};
   let orientationClass;
   let imageContainerRect: Rect;
@@ -60,8 +58,6 @@ const ImageEssentialPreview: React.FC<{
   const [ref, clientRect] = useClientRect();
   const { aspectRatio, name: aspectName, ratioText } = aspectRatioInfo;
   const landscape = aspectRatio >= 1;
-  const renderContainer = !rectEmpty(clientRect);
-  const renderImage = renderContainer && imageRect;
 
   ({ imageContainerRect, borderSize } = calcImageContainerRect(
     clientRect,
@@ -113,40 +109,12 @@ const ImageEssentialPreview: React.FC<{
 
   const textStyles = { fontSize };
 
-  if (renderImage) {
-    const renderedImageRect = fitRect(
-      imageRect,
-      essentialRect || imageRect,
-      imageContainerRect
-    );
-
-    imageStyles = {
-      position: 'absolute',
-      left: `${renderedImageRect.left}px`,
-      top: `${renderedImageRect.top}px`,
-      width: `${renderedImageRect.width}px`,
-      height: `${renderedImageRect.height}px`,
-    };
-  }
-
   return (
     <div className="image-essential-grid-item" ref={ref}>
       <div className={contentClasses} style={contentStyles}>
-        {renderContainer && (
-          <div
-            className="image-essential-image-container"
-            style={containerStyles}
-          >
-            {renderImage && (
-              <img
-                className="image-essential-image"
-                src={imageUrl}
-                alt=""
-                style={imageStyles}
-              />
-            )}
-          </div>
-        )}
+        <div className="image-essential-image-container" style={containerStyles}>
+          <EssentialRectImg src={imageUrl || ''} essentialRect={essentialRect} />
+        </div>
         <div className="image-essential-text" style={textStyles}>
           {`${aspectName} ${ratioText}`}
         </div>

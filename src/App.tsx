@@ -9,7 +9,7 @@ import ImageEssentialGrid from "./components/ImageEssentialGrid";
 import { useAppDispatch } from './store/hooks';
 import { setCurrentImage } from './store/current-image-actions';
 
-import Rect from "./model/Rect";
+import { Rect } from "react-essentialrect";
 
 function App() {
   const dispatch = useAppDispatch();
