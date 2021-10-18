@@ -77,9 +77,6 @@ const Controls: React.FC<{ onAction: (action: string) => void }> = ({
           selectedToken={selectedToken}
           onChange={viewChangeHandler}
         />
-        <HappyButton token="settings" onClick={onSettings} depressed={false}>
-          <img src={settingsIcon} alt="" />
-        </HappyButton>
       </div>
     </div>
   );
