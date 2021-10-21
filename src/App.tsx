@@ -1,10 +1,10 @@
 import React, { useRef } from "react";
 import "./App.global.scss";
 
-import ImageRectTool from "./components/ImageRectTool";
-import Controls from "./components/Controls";
+import EditorPanel from "./components/EditorPanel";
+import AppControls from "./components/AppControls";
 import SplitterLayout from 'react-splitter-layout';
-import ImageEssentialGrid from "./components/ImageEssentialGrid";
+import ImagePreviewPanel from "./components/ImagePreviewPanel";
 
 import { useAppDispatch } from './store/hooks';
 import { setCurrentImage } from './store/current-image-actions';
@@ -53,12 +53,12 @@ function App() {
     >
       <div className="left-panel">
         <input type="file" onChange={onSelectFile} ref={fileButton} style={{display:"none"}} />
-        <Controls onAction={actionHandler} />
+        <AppControls onAction={actionHandler} />
         <div className="grid-wrapper">
-          <ImageEssentialGrid />
+          <ImagePreviewPanel />
         </div>
       </div>
-      <ImageRectTool />
+      <EditorPanel />
     </SplitterLayout>
   );
 }

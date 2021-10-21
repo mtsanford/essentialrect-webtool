@@ -43,7 +43,7 @@ function calcImageContainerRect(clientRect: Rect, aspectRatio: number) {
   return { imageContainerRect, borderSize };
 }
 
-const ImageEssentialPreview: React.FC<{
+const ImagePreviewItem: React.FC<{
   aspectRatioInfo: AspectRatio;
   imageUrl?: string;
   imageRect?: Rect;
@@ -123,4 +123,4 @@ const ImageEssentialPreview: React.FC<{
   );
 };
 
-export default ImageEssentialPreview;
+export default ImagePreviewItem;

@@ -4,11 +4,11 @@ import { useAppSelector } from '../store/hooks';
 import { selectAspectRatios } from '../store/config-slice';
 import { selectPreviewColumns } from '../store/ui-slice';
 
-import ImageEssentialPreview from './ImageEssentialPreview';
+import ImagePreviewItem from './ImagePreviewItem';
 import { selectCurrentImage } from '../store/current-image-slice';
 import AspectRatio from '../model/AspectRatio';
 
-const ImageEssentialGrid: React.FC = () => {
+const ImagePreviewPanel: React.FC = () => {
   const aspectRatios = useAppSelector(selectAspectRatios);
   const previewColumns = useAppSelector(selectPreviewColumns);
   const { url, essentialRect, imageRect } = useAppSelector(
@@ -25,7 +25,7 @@ const ImageEssentialGrid: React.FC = () => {
   return (
     <div className={classes}>
       {aspectRatios.map((aspectRatioInfo: AspectRatio) => (
-        <ImageEssentialPreview
+        <ImagePreviewItem
           imageUrl={imageUrl}
           essentialRect={essentialRect}
           imageRect={imageRect}
@@ -37,4 +37,4 @@ const ImageEssentialGrid: React.FC = () => {
   );
 };
 
-export default ImageEssentialGrid;
+export default ImagePreviewPanel;

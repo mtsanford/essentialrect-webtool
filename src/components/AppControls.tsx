@@ -27,7 +27,7 @@ const Grid = () => {
   );
 };
 
-const Controls: React.FC<{ onAction: (action: string) => void }> = ({
+const AppControls: React.FC<{ onAction: (action: string) => void }> = ({
   onAction,
 }) => {
   const dispatch = useAppDispatch();
@@ -82,4 +82,4 @@ const Controls: React.FC<{ onAction: (action: string) => void }> = ({
   );
 };
 
-export default Controls;
+export default AppControls;

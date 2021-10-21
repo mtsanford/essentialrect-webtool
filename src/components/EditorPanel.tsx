@@ -3,8 +3,8 @@ import React, { CSSProperties, useEffect } from "react";
 import EssentialRectEditor from "react-essentialrect-editor";
 import { Rect, useClientRect, fitRect } from "react-essentialrect";
 
-import ImageViewerControls from "./ImageViewerControls";
-import ImageViewerInfo from "./ImageViewerInfo";
+import EditorControls from "./EditorControls";
+import EditorInfo from "./EditorInfo";
 
 import { useAppSelector, useAppDispatch } from "../store/hooks";
 import { selectMinAspectRatio, selectMaxAspectRatio } from "../store/ui-slice";
@@ -13,7 +13,7 @@ import {
   selectCurrentImage,
 } from "../store/current-image-slice";
 
-const ImageRectTool = () => {
+const EditorPanel = () => {
   const [editorWrapperRef, editorWrapperRect] = useClientRect();
   const dispatch = useAppDispatch();
   const minAspectRatio = useAppSelector(selectMinAspectRatio);
@@ -71,7 +71,7 @@ const ImageRectTool = () => {
 
   return (
     <div className="image-rect-tool">
-      <ImageViewerControls onReset={resetEssentialRect} />
+      <EditorControls onReset={resetEssentialRect} />
 
       <div className="EditorBorder"ref={editorWrapperRef}>
         <div className="EditorWrapper">
@@ -89,9 +89,9 @@ const ImageRectTool = () => {
         </div>
       </div>
 
-      <ImageViewerInfo />
+      <EditorInfo />
     </div>
   );
 };
 
-export default ImageRectTool;
+export default EditorPanel;

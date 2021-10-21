@@ -3,7 +3,7 @@ import React, { useCallback, MouseEventHandler } from 'react';
 import { selectCurrentImage } from '../store/current-image-slice';
 import { useAppSelector } from '../store/hooks';
 
-const ImageViewerInfo: React.FC = () => {
+const EditorInfo: React.FC = () => {
   const { essentialRect } = useAppSelector(selectCurrentImage);
   let monitorText = '';
 
@@ -38,4 +38,4 @@ const ImageViewerInfo: React.FC = () => {
   );
 };
 
-export default ImageViewerInfo;
+export default EditorInfo;

@@ -31,7 +31,7 @@ const aspectRatioFromID = (
   return aspectRatios.find((ar) => ar.id === id)?.aspectRatio;
 };
 
-const ImageViewerControls = (props: any) => {
+const EditorControls = (props: any) => {
   const { onReset } = props;
   const dispatch = useAppDispatch();
   const constrain = useAppSelector(selectConstrain);
@@ -125,4 +125,4 @@ const ImageViewerControls = (props: any) => {
   );
 };
 
-export default ImageViewerControls;
+export default EditorControls;
