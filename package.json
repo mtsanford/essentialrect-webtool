@@ -16,7 +16,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-essentialrect": "^1.2.1",
-    "react-essentialrect-editor": "^1.0.0",
+    "react-essentialrect-editor": "^2.0.1",
     "react-image-crop": "^9.0.4",
     "react-redux": "^7.2.4",
     "react-scripts": "4.0.3",
