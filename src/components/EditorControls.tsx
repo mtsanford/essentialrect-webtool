@@ -73,7 +73,7 @@ const EditorControls = (props: any) => {
   };
 
   return (
-    <div className="image-viewer-controls">
+    <div className="EditorControls">
       <HappyButton onClick={onReset} token="reset">
         <img src={maximizeIcon} alt="" className="svg-button" title="reset" />
       </HappyButton>

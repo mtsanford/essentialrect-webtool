@@ -70,7 +70,7 @@ const EditorPanel = () => {
   };
 
   return (
-    <div className="image-rect-tool">
+    <div className="EditorPanel">
       <EditorControls onReset={resetEssentialRect} />
 
       <div className="EditorBorder"ref={editorWrapperRef}>

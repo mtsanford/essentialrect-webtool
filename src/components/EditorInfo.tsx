@@ -25,10 +25,10 @@ const EditorInfo: React.FC = () => {
   );
 
   return (
-    <div className="image-viewer-info">
+    <div className="EditorInfo">
       {monitorText && (
         <div
-          className="image-viewer-controls-monitor"
+          className="EditorInfoMonitor"
           onClick={monitorClickHandler}
         >
           {monitorText}

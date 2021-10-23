@@ -1,6 +1,4 @@
-/* ----------------- */
-
-.image-rect-tool {
+.EditorPanel {
   height: 100%;
   width: 100%;
   display: flex;
@@ -8,21 +6,9 @@
   justify-content: space-between;
 }
 
-.image-viewer {
-  padding: 1em;
-  width: 100%;
-  overflow: hidden;
-  flex-grow: 1;
-  flex-shrink: 0;
-}
+/* ----------------- */
 
-.image-viewer-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-.image-viewer-controls {
+.EditorControls {
   display: flex;
   justify-items: flex-start;
   width: 100%;
@@ -33,38 +19,22 @@
   padding: 0.6em;
 }
 
-.image-viewer-controls div:nth-child(2) {
+.EditorControls div:nth-child(2) {
   margin-left: 1em;
 }
 
-.image-viewer-controls label {
+.EditorControls label {
   display: block;
   font-size: 0.8em;
   margin-bottom: 0.2em;
 }
 
-.image-viewer-controls select {
+.EditorControls select {
   padding: 0.1em;
   width: 18em;
 }
 
-/* ----------- */
-
-.image-viewer-info {
-  flex-grow: 0;
-  padding: 0.2em;
-  background-color: black;
-}
-
-.image-viewer-controls-monitor {
-  background-color: white;
-  color: black;
-  z-index: 300;
-  display: inline-block;
-  padding: 3px;
-  border: 1px solid black;
-  cursor: copy;
-}
+/* ---------------------- */
 
 .EditorBorder {
   padding: 16px;
@@ -78,3 +48,22 @@
   width: 100%;
   height: 100%;
 }
+
+/* ----------- */
+
+.EditorInfo {
+  flex-grow: 0;
+  padding: 0.2em;
+  background-color: black;
+}
+
+.EditorInfoMonitor {
+  background-color: white;
+  color: black;
+  z-index: 300;
+  display: inline-block;
+  padding: 3px;
+  border: 1px solid black;
+  cursor: copy;
+}
+
