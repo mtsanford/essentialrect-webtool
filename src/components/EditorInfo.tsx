@@ -1,4 +1,5 @@
-import React, { useCallback, MouseEventHandler } from 'react';
+import React, { MouseEventHandler } from 'react';
+import copy from 'copy-to-clipboard';
 
 import { selectCurrentImage } from '../store/current-image-slice';
 import { useAppSelector } from '../store/hooks';
@@ -16,13 +17,11 @@ const EditorInfo: React.FC = () => {
     monitorText = `{left:${l}, top:${t}, width:${w}, height:${h}}`;
   }
 
-  const monitorClickHandler: MouseEventHandler<HTMLDivElement> = useCallback(
+  const monitorClickHandler: MouseEventHandler<HTMLDivElement> =
     (event) => {
       event.preventDefault();
-      // clipboard.writeText(monitorText);
-    },
-    [monitorText]
-  );
+      copy(monitorText);
+    };
 
   return (
     <div className="EditorInfo">

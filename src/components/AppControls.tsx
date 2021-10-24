@@ -5,7 +5,6 @@ import { selectPreviewColumns, uiActions } from '../store/ui-slice';
 import HappyButton, { HappyButtonGroup } from './UI/HappyButton';
 
 import folderIcon from '../assets/icons/folder.svg';
-import settingsIcon from '../assets/icons/settings.svg';
 import infoIcon from '../assets/icons/info.svg';
 
 const Single = () => {
@@ -53,10 +52,6 @@ const AppControls: React.FC<{ onAction: (action: string) => void }> = ({
 
   const onFileOpen = useCallback(() => {
     onAction('fileOpen');
-  }, [onAction]);
-
-  const onSettings = useCallback(() => {
-    onAction('settings');
   }, [onAction]);
 
   const onInfo = useCallback(() => {

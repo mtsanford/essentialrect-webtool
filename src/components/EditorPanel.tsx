@@ -24,8 +24,6 @@ const EditorPanel = () => {
   if (url && editorWrapperRect && imageRect) {
     const editorRect = fitRect(imageRect, imageRect, editorWrapperRect);
 
-    console.log(editorWrapperRect);
-
     editorStyles = {
       top: `${editorRect.top}px`,
       left: `${editorRect.left}px`,

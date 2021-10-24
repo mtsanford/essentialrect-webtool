@@ -12,6 +12,7 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@types/react-splitter-layout": "^3.0.2",
+    "copy-to-clipboard": "^3.3.1",
     "immer": "^9.0.5",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

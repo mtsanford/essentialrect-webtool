@@ -1,4 +1,12 @@
-.image-essential-grid {
+.ImagePreview {
+  width: 100%;
+  flex: auto;
+  overflow-y: overlay;
+}
+
+/*-------------------*/
+
+.ImagePreview_Grid {
   display: grid;
   overflow: hidden;
   grid-template-columns: 1fr;
@@ -10,11 +18,13 @@
   overflow-y: overlay;
 }
 
-.image-essential-grid-two-column {
+.ImagePreview_Grid--TwoColumn {
   grid-template-columns: 1fr 1fr;
 }
 
-.image-essential-grid-item {
+/*-------------------*/
+
+.ImagePreviewItem {
   background-color: #222;
   display: flex;
   padding: 2%;
@@ -22,41 +32,41 @@
   overflow: hidden;
 }
 
-.image-essential-grid-item-content {
+.ImagePreviewItem_Content {
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  &.image-essential-portrait {
+  &.ImagePreviewItem--portrait {
     flex-direction: row-reverse;
-    div.image-essential-image-container {
+    div.ImagePreviewItem_Container {
       margin: 0px;
       width: 50%;
       height: 80%;
     }
-    div.image-essential-text {
+    div.ImagePreviewItem_Text {
       margin-right: 1em;
       writing-mode: vertical-rl;
     }
   }
-  &.image-essential-landscape {
+  &.ImagePreviewItem--landscape {
     flex-direction: column;
-    div.image-essential-image-container {
+    div.ImagePreview_Container {
       margin: 0px;
       width: 80%;
       height: 200px;
     }
-    div.image-essential-text {
+    div.ImagePreviewItem_Text {
       margin-top: 1em;
     }
   }
 }
 
-.image-essential-text {
+.ImagePreviewItem_Text {
   color: white;
 }
 
-.image-essential-image-container {
+.ImagePreviewItem_Container {
   background-color: black;
   border-color: white;
   border-style: solid;
@@ -66,6 +76,6 @@
   position: relative;
 }
 
-.image-essential-image {
+.ImagePreviewItem_Container_Image {
   position: absolute;
 }

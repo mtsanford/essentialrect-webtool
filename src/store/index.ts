@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import uiSlice, { UiState } from './ui-slice';
+import uiSlice from './ui-slice';
 import configSlice from './config-slice';
 import currentImageSlice from './current-image-slice';
 import persistentStorage from '../persistentStorage';

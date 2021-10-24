@@ -83,7 +83,7 @@ const ImagePreviewItem: React.FC<{
       width: sizeMultiplier * clientRect.width,
       height: (sizeMultiplier * clientRect.width) / aspectRatio,
     };
-    orientationClass = 'image-essential-landscape';
+    orientationClass = 'ImagePreviewItem--landscape';
   } else {
     imageContainerRect = {
       top: 0,
@@ -91,10 +91,10 @@ const ImagePreviewItem: React.FC<{
       width: sizeMultiplier * clientRect.width * aspectRatio,
       height: sizeMultiplier * clientRect.width,
     };
-    orientationClass = 'image-essential-portrait';
+    orientationClass = 'ImagePreviewItem--portrait';
   }
 
-  const contentClasses = `image-essential-grid-item-content ${orientationClass}`;
+  const contentClasses = `ImagePreviewItem_Content ${orientationClass}`;
 
   borderSize = clientRect.width * imageContainerBorder;
 
@@ -110,12 +110,12 @@ const ImagePreviewItem: React.FC<{
   const textStyles = { fontSize };
 
   return (
-    <div className="image-essential-grid-item" ref={ref}>
+    <div className="ImagePreviewItem" ref={ref}>
       <div className={contentClasses} style={contentStyles}>
-        <div className="image-essential-image-container" style={containerStyles}>
+        <div className="ImagePreviewItem_Container" style={containerStyles}>
           <EssentialRectImg src={imageUrl || ''} essentialRect={essentialRect} />
         </div>
-        <div className="image-essential-text" style={textStyles}>
+        <div className="ImagePreviewItem_Text" style={textStyles}>
           {`${aspectName} ${ratioText}`}
         </div>
       </div>
